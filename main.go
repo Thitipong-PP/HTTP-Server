@@ -15,6 +15,12 @@ type ResponseData struct {
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
+	// Method Checker
+	if r.Method != http.MethodGet {
+		http.Error(w, "Don't have this method", http.StatusMethodNotAllowed)
+		return
+	}
+
 	// MIME Type
 	w.Header().Set("Content-type", "application/json")
 
