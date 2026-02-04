@@ -82,9 +82,9 @@ func getAll (w http.ResponseWriter) {
 
 func getWithId (w http.ResponseWriter, id int) {
 	// Search id in server list
-	id = search(id)
-	if id != -1 {
-		if err := json.NewEncoder(w).Encode(serverList[id]); err != nil {
+	idx := search(id)
+	if idx != -1 {
+		if err := json.NewEncoder(w).Encode(serverList[idx]); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	}else {
@@ -115,9 +115,9 @@ func insert (w http.ResponseWriter, r *http.Request) {
 // Delete
 func delete (w http.ResponseWriter, id int) {
 	// Search id in server list
-	id = search(id)
-	if id != -1 {
-		serverList = append(serverList[:id], serverList[id+1:]...)
+	idx := search(id)
+	if idx != -1 {
+		serverList = append(serverList[:idx], serverList[idx+1:]...)
 		w.WriteHeader(http.StatusNoContent)
 	}else {
 		http.Error(w, "ID not found", http.StatusNotFound)
@@ -135,11 +135,11 @@ func update (w http.ResponseWriter, r *http.Request, id int) {
 
 	req.ID = id
 
-	id = search(id)
-	if id != -1 {
-		serverList[id] = req
+	idx := search(id)
+	if idx != -1 {
+		serverList[idx] = req
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(serverList[id])
+		json.NewEncoder(w).Encode(serverList[idx])
 	}else {
 		http.Error(w, "ID not found", http.StatusNotFound)
 	}
