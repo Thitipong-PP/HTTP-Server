@@ -4,8 +4,8 @@
 The simulation of HTTP Server for website and api
 
 > [!NOTE]
-> Server start at port 8080
-> The server api don't have database we use slice to mock database now 
+> Server start at port 8080 <br>
+> The server api don't have database we use slice to mock database now <br>
 > Goroutine don't have in this project.
 
 ## Getting the Source Code
