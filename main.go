@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	// Our server api and handler for CRUD
+	"github.com/Thitipong-PP/HTTP-Server/server"
 )
 
 // Basic Respons Json data
@@ -14,7 +17,7 @@ type ResponseData struct {
 	Data []string `json:"data_list"`
 }
 
-func apiHandler(w http.ResponseWriter, r *http.Request) {
+func jsonHandler(w http.ResponseWriter, r *http.Request) {
 	// Method Checker
 	if r.Method != http.MethodGet {
 		http.Error(w, "Don't have this method", http.StatusMethodNotAllowed)
@@ -61,7 +64,8 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// Handler
 	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/api", apiHandler)
+	http.HandleFunc("/json", jsonHandler)
+	http.HandleFunc("/api", server.ServerHandler)
 
 	fmt.Println("Starting server at port 8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
