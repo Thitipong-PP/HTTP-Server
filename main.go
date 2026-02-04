@@ -3,28 +3,28 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 func homeHandler (w http.ResponseWriter, r *http.Request) {
-	// fmt.Println(r.Header.Get("User-Agent"))
+	
+	fmt.Println(r.Header.Get("User-Agent"))
+	agent := r.Header.Get("User-Agent")
+	
+	// Anti-Bot - Basic
+	if strings.Contains(agent, "curl") {
+		http.Error(w, "You are Hacker?", http.StatusForbidden)
+		return
+	}
 
-	// agent := r.Header.Get("User-Agent")
-
-	// if strings.Contains(agent, "Chrome") {
-	// 	fmt.Fprintln(w, "This is run in Chrome")
-	// }else if strings.Contains(agent, "curl") {
-	// 	fmt.Fprintln(w, "You are Hacker?")
-	// }else {
-	// 	fmt.Fprintln(w, "Hello guys!")
-	// }
-
+	// Method checker
 	switch r.Method {
 		case http.MethodGet : 
-			fmt.Fprintln(w, "We sent it")
+			fmt.Fprintln(w, "You're in GET Method")
 		case http.MethodPost :
-			fmt.Fprintln(w, "We get it")
+			fmt.Fprintln(w, "Have you POST something?")
 		default :
-			fmt.Fprintln(w, "Don't have this method")
+			http.Error(w, "Don't have this method", http.StatusMethodNotAllowed)
 	}
 }
 
