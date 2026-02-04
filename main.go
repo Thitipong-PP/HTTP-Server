@@ -2,54 +2,38 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
-// Handler
-func testHandler (w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/Test" {
-		http.Error(
-			w, 
-			"404 not found.", 
-			http.StatusNotFound,
-		)
-		return
-	}
-
-	if r.Method != "GET" {
-		http.Error(
-			w,
-			"Method is not supperted.",
-			http.StatusNotFound,
-		)
-		return
-	}
-
-	fmt.Fprintln(w, "Testing Response")
-	fmt.Println("Testing Terminal")
-}
-
 func homeHandler (w http.ResponseWriter, r *http.Request) {
-	fmt.Println("URL : ", r.URL.Path)
-	fmt.Fprintf(w, "Hello this is home handler using net/http")
-}
+	// fmt.Println(r.Header.Get("User-Agent"))
 
-func statusHandler (w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([] byte("System Normal: All systems operational"))
+	// agent := r.Header.Get("User-Agent")
+
+	// if strings.Contains(agent, "Chrome") {
+	// 	fmt.Fprintln(w, "This is run in Chrome")
+	// }else if strings.Contains(agent, "curl") {
+	// 	fmt.Fprintln(w, "You are Hacker?")
+	// }else {
+	// 	fmt.Fprintln(w, "Hello guys!")
+	// }
+
+	switch r.Method {
+		case http.MethodGet : 
+			fmt.Fprintln(w, "We sent it")
+		case http.MethodPost :
+			fmt.Fprintln(w, "We get it")
+		default :
+			fmt.Fprintln(w, "Don't have this method")
+	}
 }
 
 func main () {
-	// Handle
+	// Handler
 	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/status", statusHandler)
-	http.HandleFunc("/Test", testHandler)
-	
-	// Set Server Port
-	fmt.Println("Starting server at port 8080")
 
+	fmt.Println("Starting server at port 8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 }
