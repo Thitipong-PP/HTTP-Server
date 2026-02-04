@@ -66,6 +66,7 @@ func main() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/json", jsonHandler)
 	http.HandleFunc("/server", server.ServerHandler)
+	http.HandleFunc("/server/", server.ServerHandler)
 
 	fmt.Println("Starting server at port 8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
