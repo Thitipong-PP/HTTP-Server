@@ -1,12 +1,36 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 )
 
-func homeHandler (w http.ResponseWriter, r *http.Request) {
+// Basic Respons Json data
+type ResponseData struct {
+	Message string `json:"message"`
+	Success bool `json:"success"`
+	Data []string `json:"data_list"`
+}
+
+func apiHandler(w http.ResponseWriter, r *http.Request) {
+	// MIME Type
+	w.Header().Set("Content-type", "application/json")
+
+	res := ResponseData{
+		Message: "Say Hi Json",
+		Success: true,
+		Data: []string{"Server", "Database"},
+	}
+
+	if err := json.NewEncoder(w).Encode(res); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// Basic Handler Request
+func homeHandler(w http.ResponseWriter, r *http.Request) {
 	
 	fmt.Println(r.Header.Get("User-Agent"))
 	agent := r.Header.Get("User-Agent")
@@ -28,9 +52,10 @@ func homeHandler (w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func main () {
+func main() {
 	// Handler
 	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/api", apiHandler)
 
 	fmt.Println("Starting server at port 8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
