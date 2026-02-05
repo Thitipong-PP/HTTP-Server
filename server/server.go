@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -29,8 +28,8 @@ func ServerHandler(w http.ResponseWriter, r *http.Request) {
 	param := strings.TrimPrefix(r.URL.Path, "/server/")
 	id, _ := strconv.Atoi(param)
 
-	fmt.Println(param)
-	fmt.Println(id)
+	// fmt.Println(param)
+	// fmt.Println(id)
 
 	// Choose method
 	switch r.Method {
