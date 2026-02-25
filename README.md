@@ -1,5 +1,4 @@
 # HTTP Server and API (Basic)
-[![GoDoc](https://godoc.org/github.com/google/trillian?status.svg)](https://godoc.org/github.com/google/trillian)
 
 The simulation of HTTP Server for website and api
 
@@ -9,18 +8,16 @@ The simulation of HTTP Server for website and api
 > 3) Goroutine don't have in this project.
 
 ## Getting the Source Code
-Using `git clone` allows you to work in whatever directory you want. You will
-still need to set GOPATH in order to build some apps (recommended to put this in
-a cache dir). E.g.:
+Clone the repository to your local machine:
 
-```
+``` bash
 $ cd ${WORKDIR}
 $ git clone https://github.com/Thitipong-PP/HTTP-Server.git
 $ cd HTTP-Server
 ```
 
 And try to run
-```
+``` bash
 $ go run main.go
 ```
 
@@ -46,7 +43,7 @@ localhost:8080/server/<id>
 ## Server Struct
 This is structure of server struct in project
 
-```
+``` go
 type Server struct {
 	ID int `json:"id"`
 	Name string `json:"name"`
@@ -56,7 +53,7 @@ type Server struct {
 ```
 
 A example json data (You don't need to put ID when post or put because ID will auto increment)
-```
+``` json
 {
     "name": "TP_Server",
     "ip": "123.456.789",
